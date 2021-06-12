@@ -19,8 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category');
+Route::group([
+        'middleware' => 'auth'
+    ], function() {
+        Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        // Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category');
 
-Route::resource('category', 'App\Http\Controllers\CategoryController');
-Route::resource('post', 'App\Http\Controllers\PostController');
+        Route::resource('category', 'App\Http\Controllers\CategoryController');
+        Route::resource('post', 'App\Http\Controllers\PostController');
+    }
+);

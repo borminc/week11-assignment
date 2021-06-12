@@ -13,6 +13,7 @@
             <th scope="col">Category</th>
             <th scope="col">User</th>
             <th scope="col">Action</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -24,7 +25,7 @@
                 <td>{{$post->category->name}}</td>
                 <td>{{$post->user->name}}</td>
                 
-
+                @can('can-manage-post', $post)
                 <td class="d-flex">
                     <a class="btn btn-outline-primary mr-2" href="{{ route('post.edit', $post->id) }}">Edit</a>
 
@@ -34,6 +35,7 @@
                         <button type="submit" class="btn btn-outline-danger">Delete</button>
                     </form>
                 </td>
+                @endcan
             </tr>
         @endforeach
        

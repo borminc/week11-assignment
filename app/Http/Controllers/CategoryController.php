@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -14,10 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::all();
+        $categories = Category::all();
         // dd($data);
         return view('category.index', [
-            'categories' => $data
+            'categories' => $categories
         ]);
     }
 
@@ -28,6 +29,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->cannot('create', Category::class)) {
+            abort(403);
+        }
         return view('category.create');
     }
 
@@ -39,6 +43,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->cannot('create', Category::class)) {
+            abort(403);
+        }
         Category::create($request->all());
         return redirect(route('category.index'));
     }
@@ -62,6 +69,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        if (Auth::user()->cannot('update', $category)) {
+            abort(403);
+        }
         return view('category.edit', [
             'category' => $category
         ]);
@@ -76,6 +86,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        if (Auth::user()->cannot('update', $category)) {
+            abort(403);
+        }
         $category->name = $request->get('name');
         $category->save();
         return redirect(route('category.index'));
@@ -89,6 +102,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if (Auth::user()->cannot('delete', $category)) {
+            abort(403);
+        }
         $category->delete();
         return redirect(route('category.index'));
     }

@@ -74,6 +74,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if (Auth::user()->cannot('update', $post)) {
+            abort(403);
+        }
         $categories = Category::all();
         return view('post.edit', [
             'post' => $post,
@@ -90,6 +93,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if ($request->user()->cannot('update', $post)) {
+            abort(403);
+        }
         $post->title = $request->get('title');
         $post->body = $request->get('body');
         $post->category_id = $request->get('category_id');
@@ -105,6 +111,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (Auth::user()->cannot('delete', $post)) {
+            abort(403);
+        }
         $post->delete();
         return redirect(route('post.index'));
     }
