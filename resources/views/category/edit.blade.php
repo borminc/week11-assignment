@@ -8,7 +8,7 @@
         @method('put')
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value={{$category->name}}>
+            <input required type="text" class="form-control" id="name" name="name" value={{$category->name}}>
         </div>
         <button type="submit" class="btn btn-primary"> Save </button>
     </form>

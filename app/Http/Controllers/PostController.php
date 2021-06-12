@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +16,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        $categories = Category::all();
+        return view('post.index', [
+            'posts' => $posts,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -24,7 +31,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('post.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -35,7 +45,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $post = new Post();
+        $post->title = $request->get('title');
+        $post->body = $request->get('body');
+        $post->category_id = $request->get('category_id');
+        $post->user_id = $user->id;
+        $post->save();
+        return redirect(route('post.index'));
     }
 
     /**
@@ -57,7 +74,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        return view('post.edit', [
+            'post' => $post,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -69,7 +90,11 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->title = $request->get('title');
+        $post->body = $request->get('body');
+        $post->category_id = $request->get('category_id');
+        $post->save();
+        return redirect(route('post.index'));
     }
 
     /**
@@ -80,6 +105,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect(route('post.index'));
     }
 }
