@@ -9,11 +9,11 @@
                 </a>
                 
                 <div class="sb-sidenav-menu-heading">Management</div>
-                <a class="nav-link" href="{{route('category')}}">
+                <a class="nav-link" href="{{route('category.index')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Category
                 </a>
-                <a class="nav-link" href="{{route('post')}}">
+                <a class="nav-link" href="{{route('post.index')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Post
                 </a>
@@ -22,7 +22,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            {{ Auth::user()->name }}
+            {{ Auth::user()->name }} - {{ Auth::user()->role }}
         </div>
     </nav>
 </div>

@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/category', [App\Http\Controllers\HomeController::class, 'category'])->name('category');
-Route::get('/post', [App\Http\Controllers\HomeController::class, 'post'])->name('post');
+// Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category');
 
+Route::resource('category', 'App\Http\Controllers\CategoryController');
+Route::resource('post', 'App\Http\Controllers\PostController');
