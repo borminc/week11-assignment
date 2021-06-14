@@ -20,7 +20,9 @@
         @foreach ($posts as $post)
              <tr>
                 <th scope="row">{{$loop->index + 1}}</th>
-                <td>{{$post->title}}</td>
+                <td>
+                    <a href="{{ route('post.show', $post->id) }}">{{$post->title}} </a>
+                </td>
                 <td>{{$post->body}}</td>
                 <td>{{$post->category->name}}</td>
                 <td>{{$post->user->name}}</td>
